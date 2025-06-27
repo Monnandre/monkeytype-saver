@@ -22,7 +22,6 @@ def create_main_figure():
     """
     df = pd.DataFrame()
 
-    # 2. Try to load and process the data.
     try:
         with open(SAVE_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -87,26 +86,27 @@ def create_main_figure():
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
-# Define the app layout. The figure is generated once and passed directly.
-app.layout = html.Div(style={
-    'backgroundColor': BACKGROUND_COLOR,
-    'color': TEXT_COLOR,
-    'height': '100vh',
-    'display': 'flex',
-    'flexDirection': 'column',
-    'padding': '20px',
-    'boxSizing': 'border-box'
-}, children=[
-    html.H1(
-        children='Monkeytype Stats',
-        style={'textAlign': 'center', 'flexShrink': 0}
-    ),
-    dcc.Graph(
-        id='main-graph',
-        figure=create_main_figure(),
-        style={'flexGrow': 1, 'minHeight': 0} 
-    )
-])
+def serve_layout():
+    return html.Div(style={
+        'backgroundColor': BACKGROUND_COLOR,
+        'color': TEXT_COLOR,
+        'height': '100vh',
+        'display': 'flex',
+        'flexDirection': 'column',
+        'padding': '20px',
+        'boxSizing': 'border-box'
+    }, children=[
+        html.H1(
+            children='Monkeytype Stats',
+            style={'textAlign': 'center', 'flexShrink': 0}
+        ),
+        dcc.Graph(
+            id='main-graph',
+            figure=create_main_figure(),
+            style={'flexGrow': 1, 'minHeight': 0}
+        )
+    ])
 
-
+# Assign the function to app.layout instead of the object itself.
+app.layout = serve_layout
 app.run(debug=False, host='0.0.0.0', port=8050)
