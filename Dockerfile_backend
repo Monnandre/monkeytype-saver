@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+# Copy requirements.txt first for caching efficiency
+COPY requirements_backend.txt .
+RUN pip install --no-cache-dir -r requirements_backend.txt
+
+ENV PYTHONUNBUFFERED=1
+
+CMD ["python", "backend.py"]
