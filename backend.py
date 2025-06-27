@@ -9,7 +9,6 @@ APE_KEY = os.environ.get("MONKEYTYPE_APE_KEY")
 UPDATES_PER_DAY = int(os.environ.get("UPDATES_PER_DAY", 1))
 
 # Calculate sleep time. If UPDATES_PER_DAY is 0 or less, sleep for a very long time.
-# This prevents a division-by-zero error and stops the loop.
 SLEEP_INTERVAL_SECONDS = (24 * 60 * 60) / UPDATES_PER_DAY if UPDATES_PER_DAY > 0 else 99999999
 
 BASE_URL = "https://api.monkeytype.com/results"
@@ -120,7 +119,7 @@ def run_fetch_cycle():
     print("--- Fetch cycle complete ---")
 
 
-
+# MAIN LOOP
 while True:
     run_fetch_cycle()
     print(f"Sleeping for {SLEEP_INTERVAL_SECONDS / 60:.2f} minutes...")
