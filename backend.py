@@ -8,7 +8,7 @@ from threading import Lock
 APE_KEY = os.environ.get("MONKEYTYPE_APE_KEY")
 BASE_URL = "https://api.monkeytype.com/results"
 HEADERS = {"Authorization": f"ApeKey {APE_KEY}"}
-SAVE_FILE = "monkeytype_results.json"
+SAVE_FILE = "data/monkeytype_results.json"
 file_lock = Lock()
 
 def run_fetch_cycle():
