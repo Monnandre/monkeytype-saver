@@ -3,5 +3,6 @@ WORKDIR /app
 COPY requirements_backend.txt .
 RUN pip install --no-cache-dir -r requirements_backend.txt
 COPY backend.py .
-# On ne copie pas le JSON, il sera monté en volume
+# On s'assure que le fichier JSON peut être écrit
+RUN touch monkeytype_results.json && chmod 666 monkeytype_results.json
 CMD ["python", "backend.py"]
