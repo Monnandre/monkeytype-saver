@@ -9,7 +9,8 @@ services:
       - MONKEYTYPE_APE_KEY=${MONKEYTYPE_APE_KEY}
       - UPDATES_PER_DAY=${UPDATES_PER_DAY}
     volumes:
-      - monkeytype_data:/app/data
+      # On lie ton dossier SSD au dossier /app/data du container
+      - /opt/docker/monkeytype:/app/data
 
   monkeytype-frontend:
     build:
@@ -22,14 +23,12 @@ services:
     environment:
       - MONKEYTYPE_APE_KEY=${MONKEYTYPE_APE_KEY}
     volumes:
-      - monkeytype_data:/app/data
+      # On partage le même dossier pour que le frontend lise le JSON
+      - /opt/docker/monkeytype:/app/data
     depends_on:
       - monkeytype-backend
     networks:
       - proxy-net
-
-volumes:
-  monkeytype_data: # Ce volume survit aux déploiements
 
 networks:
   proxy-net:
