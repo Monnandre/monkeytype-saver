@@ -9,7 +9,4 @@ RUN mkdir data
 EXPOSE 8050
 
 # COMMANDE DE PRODUCTION :
-# -b : bind sur toutes les interfaces sur le port 8050
-# --workers 4 : utilise les 4 cœurs de ton i3
-# frontend:server : cherche le fichier frontend.py et la variable server
-CMD ["gunicorn", "-b", "0.0.0.0:8050", "--workers", "4", "frontend:server"]
+CMD ["gunicorn", "-b", "0.0.0.0:8050", "frontend:server"]
