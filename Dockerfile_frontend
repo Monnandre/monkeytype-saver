@@ -2,6 +2,8 @@ FROM python:3.11-slim
 WORKDIR /app
 COPY requirements_frontend.txt .
 RUN pip install --no-cache-dir -r requirements_frontend.txt
-COPY frontend.py backend.py . 
-# Note: frontend.py importe backend.py pour run_fetch_cycle
+# Le frontend a besoin de backend.py pour l'import 'from backend import...'
+COPY backend.py . 
+COPY frontend.py .
+EXPOSE 8050
 CMD ["python", "frontend.py"]
