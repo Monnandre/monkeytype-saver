@@ -1,10 +1,7 @@
 FROM python:3.11-slim
-
 WORKDIR /app
-# Copy requirements.txt first for caching efficiency
 COPY requirements_frontend.txt .
 RUN pip install --no-cache-dir -r requirements_frontend.txt
-
-ENV PYTHONUNBUFFERED=1
-
+COPY frontend.py backend.py . 
+# Note: frontend.py importe backend.py pour run_fetch_cycle
 CMD ["python", "frontend.py"]
