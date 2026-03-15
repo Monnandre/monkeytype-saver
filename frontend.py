@@ -14,7 +14,7 @@ SECONDARY_ACCENT = "#525045"
 PB_COLOR = "#d75f00"
 
 app = dash.Dash(__name__, update_title=None)
-
+server = app.server 
 # Global variables for caching to prevent redundant disk reads
 _CACHED_DF = None
 _LAST_MTIME = 0
