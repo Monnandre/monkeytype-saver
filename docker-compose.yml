@@ -1,0 +1,36 @@
+services:
+  monkeytype-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: monkeytype-fetcher
+    restart: unless-stopped
+    environment:
+      - MONKEYTYPE_APE_KEY=${MONKEYTYPE_APE_KEY}
+      - UPDATES_PER_DAY=${UPDATES_PER_DAY}
+    volumes:
+      - monkeytype_data:/app
+
+  monkeytype-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: monkeytype-ui
+    restart: unless-stopped
+    ports:
+      - "8050:8050"
+    environment:
+      - MONKEYTYPE_APE_KEY=${MONKEYTYPE_APE_KEY}
+    volumes:
+      - monkeytype_data:/app
+    depends_on:
+      - monkeytype-backend
+    networks:
+      - proxy-net
+
+volumes:
+  monkeytype_data: # Ce volume survit aux déploiements
+
+networks:
+  proxy-net:
+    external: true
