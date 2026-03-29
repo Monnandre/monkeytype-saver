@@ -27,9 +27,3 @@ services:
       - /opt/docker/monkeytype:/app/data
     depends_on:
       - monkeytype-backend
-    networks:
-      - proxy-net
-
-networks:
-  proxy-net:
-    external: true
