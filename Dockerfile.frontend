@@ -9,4 +9,4 @@ RUN mkdir data
 EXPOSE 8050
 
 # COMMANDE DE PRODUCTION :
-CMD ["gunicorn", "-b", "0.0.0.0:8050", "frontend:server"]
+CMD ["gunicorn", "-b", "0.0.0.0:8050", "--workers=1", "--threads=2", "frontend:server"]
