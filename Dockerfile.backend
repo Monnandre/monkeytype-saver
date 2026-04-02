@@ -3,6 +3,7 @@ WORKDIR /app
 COPY requirements_backend.txt .
 RUN pip install --no-cache-dir -r requirements_backend.txt
 COPY backend.py .
+COPY chart.py .
 # On crée le dossier data pour le volume
 RUN mkdir data
 CMD ["python", "backend.py"]

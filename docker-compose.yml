@@ -20,10 +20,8 @@ services:
     restart: unless-stopped
     ports:
       - "8050:8050"
-    environment:
-      - MONKEYTYPE_APE_KEY=${MONKEYTYPE_APE_KEY}
     volumes:
-      # On partage le même dossier pour que le frontend lise le JSON
+      # On partage le même dossier pour que nginx serve le HTML
       - /opt/docker/monkeytype:/app/data
     depends_on:
       - monkeytype-backend

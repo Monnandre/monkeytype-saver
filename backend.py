@@ -3,6 +3,7 @@ import time
 import json
 import os
 from threading import Lock
+import plotly.io as pio
 
 # --- CONFIGURATION ---
 APE_KEY = os.environ.get("MONKEYTYPE_APE_KEY")
@@ -72,10 +73,31 @@ def run_fetch_cycle():
             with open(SAVE_FILE, "w", encoding="utf-8") as f:
                 json.dump(sorted_data, f, indent=2)
         print(f"Added {new_count} new records.")
+        export_html()
         return True
     return False
 
+def export_html():
+    """Generates a static HTML file from the current data."""
+    try:
+        from chart import create_main_figure
+        fig = create_main_figure()
+        html_path = os.path.join(os.path.dirname(SAVE_FILE), "index.html")
+        pio.write_html(
+            fig,
+            file=html_path,
+            auto_open=False,
+            include_plotlyjs='cdn',
+            full_html=True
+        )
+        print(f"Exported HTML to {html_path}")
+    except Exception as e:
+        print(f"Error exporting HTML: {e}")
+
 if __name__ == "__main__":
+    # Generate initial HTML on startup
+    export_html()
+
     # Standard background loop logic
     UPDATES_PER_DAY = int(os.environ.get("UPDATES_PER_DAY", 1))
     SLEEP_SEC = (24 * 3600) / UPDATES_PER_DAY if UPDATES_PER_DAY > 0 else 3600

@@ -1,12 +1,2 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements_frontend.txt .
-RUN pip install --no-cache-dir -r requirements_frontend.txt
-COPY backend.py . 
-COPY frontend.py .
-RUN mkdir data
-
-EXPOSE 8050
-
-# COMMANDE DE PRODUCTION :
-CMD ["gunicorn", "-b", "0.0.0.0:8050", "--workers=1", "--threads=2", "frontend:server"]
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
